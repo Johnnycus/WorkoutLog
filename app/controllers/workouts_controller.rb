@@ -1,18 +1,21 @@
 class WorkoutsController < ApplicationController
   before_action :find_workout, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :require_user, only: [:show, :edit, :update, :destroy]
+
   def index
-    @workouts = Workout.all.order("created_at DESC")
+    @workouts = current_user.workouts.all.order("created_at DESC")
   end
 
   def show
   end
 
   def new
-    @workout = Workout.new
+    @workout = current_user.workouts.build
   end
 
   def create
-    @workout = Workout.new(workout_params)
+    @workout = current_user.workouts.build(workout_params)
     if @workout.save
       redirect_to @workout
     else
@@ -44,5 +47,11 @@ class WorkoutsController < ApplicationController
 
   def find_workout
     @workout = Workout.find(params[:id])
+  end
+
+  def require_user
+    if current_user != @workout.user
+      redirect_to root_path
+    end
   end
 end
