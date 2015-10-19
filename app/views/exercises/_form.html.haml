@@ -3,4 +3,6 @@
   = f.input :sets, input_html: { class: "form-control" }
   = f.input :reps, input_html: { class: "form-control" }
   %br/
+  = link_to "Edit", edit_workout_path(@workout), class: "btn btn-warning"
   = f.button :submit
+  = link_to "Delete", workout_path(@workout), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger"

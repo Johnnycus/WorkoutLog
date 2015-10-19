@@ -1,16 +1,36 @@
-#workout
-  %p= @workout.date.strftime("%A %B %d")
-  %p= @workout.workout
-  %p= @workout.mood
-  %p= @workout.length
+.row
+  .col-md-6
+    #workout
+      %h2= @workout.date.strftime("%A, %d %B %Y, %H:%M")
+      %h3
+        %span Part of body:
+        = @workout.workout
+        %br/
+        %span Mood:
+        = @workout.mood
+        %br/
+        %span Length:
+        = @workout.length
 
-#exercises
-  %h2 Exercises
-  = render @workout.exercises
 
-  %h3 Add an exercise
-  = render "exercises/form"
+      .text-center
+        %br/
+        %h3 Add an exercise
+        %br/
+        = render "exercises/form"
+  .col-md-6
+    #exercises
+      %h2.text-center Exercises
+      %table.table.table-condensed.borderless
+        %thead
+          %tr
+            %th Name
+            %th Sets
+            %th Reps
+        %tbody
+          - @workout.exercises.each do |exercise|
+            %tr
+              %td= exercise.name
+              %td= exercise.sets
+              %td= exercise.reps
 
-= link_to "Back", root_path
-= link_to "Edit", edit_workout_path(@workout)
-= link_to "Delete", workout_path(@workout), method: :delete, data: { confirm: "Are you sure?" }
