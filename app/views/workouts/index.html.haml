@@ -1,6 +1,11 @@
-#index_workouts
-  - @workouts.each do |workout|
-    %h2= link_to workout.date.strftime("%A %B %d"), workout
-    %h3
-      %span Workout:
-      = workout.workout
+- if user_signed_in? && @workouts.count >= 1
+  #index_workouts
+    - @workouts.each do |workout|
+      %h2= link_to workout.date.strftime("%A %B %d"), workout
+      %h3
+        %span Workout:
+        = workout.workout
+- elsif !user_signed_in?
+  %h1.zero_workouts.text-center You need to #{ link_to "Login", new_user_session_path } or #{ link_to "Register", new_user_registration_path }.
+- elsif @workouts.count == 0
+  %h1.zero_workouts You have 0 workouts.
