@@ -1,8 +1,14 @@
-%nav.navbar.navbar-default
+%nav.navbar.navbar-default{:role => "navigation"}
   .container
     .navbar-header
+      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
       = link_to "Workout Log", root_path, class: "navbar-brand"
-    .nav.navbar-nav.navbar-right
+
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse.nav.navbar-nav.navbar-right
       - if current_user
         = link_to "New Workout", new_workout_path, class: "navbar-link"
         = link_to "Log Out", destroy_user_session_path, method: :delete, class: "navbar-link"
